@@ -1,14 +1,20 @@
 package garcia.francisco.info6130_project_1.activitys
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
+import garcia.francisco.info6130_project_1.R
 import garcia.francisco.info6130_project_1.adapters.ArticleAdapter
 import garcia.francisco.info6130_project_1.databinding.ActivityMainBinding
 import garcia.francisco.info6130_project_1.models.Article
+import garcia.francisco.info6130_project_1.repository.ArticleRepository
 import garcia.francisco.info6130_project_1.utils.LikePreferencesHelper
 import garcia.francisco.info6130_project_1.viewModels.MainViewModel
 
@@ -24,16 +30,23 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(findViewById(R.id.toolbar))
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         likePreferencesHelper = LikePreferencesHelper(this)
 
         setupRecyclerView()
         observeViewModel()
+
+        binding.btnLikedArticles.setOnClickListener {
+            startActivity(Intent(this, LikedArticlesActivity::class.java))
+        }
     }
 
     private fun setupRecyclerView() {
         articleAdapter = ArticleAdapter(emptyList()) { article ->
-            toggleLike(article)
+            // Open detail screen on click
+            val intent = ArticleDetailActivity.newIntent(this, article)
+            startActivity(intent)
         }
 
         binding.recyclerViewArticles.apply {
@@ -49,7 +62,8 @@ class MainActivity : AppCompatActivity() {
                 articles.forEach { article ->
                     article.isLiked = likePreferencesHelper.getLikeState(article.id)
                 }
-
+                // Save to repository for sharing
+                ArticleRepository.articles = articles
                 articleAdapter.updateArticles(articles)
                 binding.tvTitleResult.text = "${articles.size} articles loaded"
                 binding.recyclerViewArticles.visibility = View.VISIBLE
@@ -69,5 +83,28 @@ class MainActivity : AppCompatActivity() {
 
     fun onLoadClick(view: View) {
         viewModel.loadNews(1)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Reload like state for all articles
+        val articles = viewModel._articles.value ?: return
+        articles.forEach { it.isLiked = likePreferencesHelper.getLikeState(it.id) }
+        articleAdapter.updateArticles(articles)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_about -> {
+                startActivity(Intent(this, AboutActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

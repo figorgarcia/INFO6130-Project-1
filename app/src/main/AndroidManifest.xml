@@ -23,6 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activitys.ArticleDetailActivity" />
+        <activity android:name=".activitys.LikedArticlesActivity" />
+        <activity android:name=".activitys.AboutActivity" />
     </application>
 
 </manifest>

@@ -16,9 +16,9 @@
         <ImageView
             android:id="@+id/ivArticleImage"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="120dp"
             android:scaleType="centerCrop"
-            android:background="@color/light_gray"
+            android:contentDescription="Article image"
             android:layout_marginBottom="8dp" />
 
         <TextView
@@ -37,6 +37,14 @@
             android:text="@string/article_description"
             android:textSize="14sp"
             android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:id="@+id/tvLikeState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginTop="4dp"
+            android:layout_gravity="end" />
 
         <Button
             android:id="@+id/btnLike"
