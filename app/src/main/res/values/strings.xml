@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">INFO6130-Project-1</string>
+    <string name="header_tv">Click to Load News</string>
+    <string name="onLoad_btn">Load</string>
+    <string name="titleResult_tv">No articles loaded</string>
+    <string name="article_title">Article Title</string>
+    <string name="article_description">Article description goes here...</string>
+    <string name="like_btn">🤍 Like</string>
 </resources>

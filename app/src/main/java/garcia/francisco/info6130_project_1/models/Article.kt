@@ -6,5 +6,10 @@ data class Article(
     val url: String,
     val urlToImage: String?,
     val publishedAt: String,
-    val content: String?
-)
+    val content: String?,
+    var isLiked: Boolean = false
+) {
+    // Generate a unique ID based on title and URL
+    val id: String
+        get() = "${title.hashCode()}_${url?.hashCode() ?: 0}"
+}
