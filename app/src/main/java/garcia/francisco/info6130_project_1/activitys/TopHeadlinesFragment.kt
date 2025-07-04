@@ -13,23 +13,27 @@ import garcia.francisco.info6130_project_1.adapters.ArticleAdapter
 import garcia.francisco.info6130_project_1.databinding.ActivityMainBinding
 import garcia.francisco.info6130_project_1.databinding.FragmentTopHeadlinesBinding
 import garcia.francisco.info6130_project_1.interfaces.NewsInterface
+import garcia.francisco.info6130_project_1.models.Article
 import garcia.francisco.info6130_project_1.provider.NewsRetrofitProvider
 import garcia.francisco.info6130_project_1.repository.ArticleRepository
 import garcia.francisco.info6130_project_1.repository.NewsRepository
 import garcia.francisco.info6130_project_1.utils.LikePreferencesHelper
 import garcia.francisco.info6130_project_1.viewModels.MainViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TopHeadlinesFragment: Fragment() {
+
     private var _binding: FragmentTopHeadlinesBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var adapter: ArticleAdapter
     private lateinit var newsRepo: NewsRepository
+    private lateinit var likePreferencesHelper: LikePreferencesHelper
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentTopHeadlinesBinding.inflate(inflater, container, false)
         val api = NewsRetrofitProvider.retrofitInstance.create(NewsInterface::class.java)
         newsRepo = NewsRepository(api)
@@ -38,13 +42,17 @@ class TopHeadlinesFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        likePreferencesHelper = LikePreferencesHelper(requireContext())
 
-        adapter = ArticleAdapter(
-            emptyList(),
+        adapter = ArticleAdapter(emptyList(),
             onLikeClick = { article ->
+                toggleLike(article)
             },
             onArticleClick = { article ->
-            })
+                val intent = ArticleDetailActivity.newIntent(requireContext(), article)
+                startActivity(intent)
+            }
+        )
 
         binding.recyclerViewTopHeadlines.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewTopHeadlines.adapter = adapter
@@ -52,25 +60,33 @@ class TopHeadlinesFragment: Fragment() {
         loadTopHeadlines()
     }
 
-    private fun loadTopHeadlines() {
-        lifecycleScope.launch {
-            try {
-                val response = newsRepo.getHeadlines("us")  // Try "us" first
-                if (response.isSuccessful) {
-                    val articles = response.body()?.articles ?: emptyList()
+    fun loadTopHeadlines() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = newsRepo.getHeadlines("us")
+            Log.v("RESULT", response.toString())
+            if (response.isSuccessful) {
+                val articles = response.body()?.articles ?: emptyList()
+
+                withContext(Dispatchers.Main) {
                     adapter.updateArticles(articles)
                     Log.d("loadTopHeadlines", "${articles.count()} headlines loaded")
-                    binding.tvHeadlineResult.text = "${articles.count()} headlines loaded"
-                } else {
-                    val errorMsg = response.errorBody()?.string() ?: "Unknown error"
-                    Log.d("loadTopHeadlines", "Failed to load headlines:\n$errorMsg")
-                    binding.tvHeadlineResult.text = "Failed to load headlines:\n$errorMsg"
+                    binding.tvTitleResult2.text = "${articles.count()} headlines loaded"
                 }
-            } catch (e: Exception) {
-                Log.d("loadTopHeadlines", "Error: ${e.message}")
-                binding.tvHeadlineResult.text = "Error: ${e.message}"
+            } else {
+                val errorMsg = response.errorBody()?.string() ?: "Unknown error"
+                withContext(Dispatchers.Main) {
+                    Log.d("loadTopHeadlines", "Failed to load headlines:\n$errorMsg")
+                    binding.tvTitleResult2.text = "Failed to load headlines:\n$errorMsg"
+                }
             }
         }
+    }
+
+    private fun toggleLike(article: Article) {
+        article.isLiked = !article.isLiked
+        likePreferencesHelper.saveLikeState(article.id, article.isLiked)
+
+        Log.d("MainActivity", "Article ${article.title} liked: ${article.isLiked}")
     }
 
     override fun onDestroyView() {

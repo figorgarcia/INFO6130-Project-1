@@ -38,14 +38,6 @@
             android:textSize="14sp"
             android:layout_marginBottom="12dp" />
 
-        <TextView
-            android:id="@+id/tvLikeState"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_marginTop="4dp"
-            android:layout_gravity="end" />
-
         <Button
             android:id="@+id/btnLike"
             android:layout_width="wrap_content"

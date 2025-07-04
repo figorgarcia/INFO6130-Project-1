@@ -6,29 +6,28 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvHeadlineResult"
+        android:id="@+id/tvTitleResult2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="353dp"
-        android:layout_marginBottom="354dp"
-        android:text="Top Headlines"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/titleResult_tv"
         android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/recyclerViewTopHeadlines"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTopHeadlines"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleResult2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

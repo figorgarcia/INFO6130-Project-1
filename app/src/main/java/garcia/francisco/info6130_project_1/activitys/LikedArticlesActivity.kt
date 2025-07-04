@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +39,8 @@ class LikedArticlesActivity : AppCompatActivity() {
             onLikeClick = { article ->
             },
             onArticleClick = { article ->
+                val intent = ArticleDetailActivity.newIntent(this, article)
+                startActivity(intent)
             })
         binding.recyclerViewLikedArticles.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewLikedArticles.adapter = adapter
@@ -47,7 +50,7 @@ class LikedArticlesActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // Reload liked articles
+
         val likedIds: Set<String> = likePreferencesHelper.getAllLikedArticles()
         val allArticles: List<Article> = ArticleRepository.articles
         val likedArticles: List<Article> = allArticles.filter { likedIds.contains(it.id) }

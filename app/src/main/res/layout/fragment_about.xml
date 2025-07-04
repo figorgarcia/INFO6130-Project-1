@@ -14,10 +14,10 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="50dp"
             android:layout_marginBottom="24dp"
-            android:src="@mipmap/ic_launcher"
-            android:contentDescription="App Icon" />
+            android:contentDescription="App Icon"
+            android:src="@mipmap/ic_launcher" />
 
         <!-- App Title -->
         <TextView

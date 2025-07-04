@@ -3,6 +3,8 @@ package garcia.francisco.info6130_project_1.activitys
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import garcia.francisco.info6130_project_1.R
 import garcia.francisco.info6130_project_1.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {

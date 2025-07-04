@@ -1,5 +1,6 @@
 package garcia.francisco.info6130_project_1.repository
 
+import android.util.Log
 import garcia.francisco.info6130_project_1.interfaces.NewsInterface
 import garcia.francisco.info6130_project_1.models.NewsResponse
 import retrofit2.Response
@@ -14,4 +15,5 @@ class NewsRepository(private val api: NewsInterface) {
     suspend fun getHeadlines(country: String): Response<NewsResponse> {
         return  api.getHeadlines(country, apiKey)
     }
+
 }

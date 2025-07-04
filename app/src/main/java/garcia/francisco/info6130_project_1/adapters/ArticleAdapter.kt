@@ -21,7 +21,7 @@ class ArticleAdapter(
         val imageView: ImageView = itemView.findViewById(R.id.ivArticleImage)
         val titleTextView: TextView = itemView.findViewById(R.id.tvArticleTitle)
         val descriptionTextView: TextView = itemView.findViewById(R.id.tvArticleDescription)
-        val likeTextView: TextView = itemView.findViewById(R.id.tvLikeState)
+        //val likeTextView: TextView = itemView.findViewById(R.id.tvLikeState)
         val likeButton: Button = itemView.findViewById(R.id.btnLike)
     }
 

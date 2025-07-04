@@ -28,22 +28,23 @@ class MainViewModel() : ViewModel() {
     }
 
     fun loadNews(page: Int = currentPage) {
+        if (!_articles.value.isNullOrEmpty()) {
+            return
+        }
+
         CoroutineScope(Dispatchers.IO).launch {
             val response = repository.getNews(query, pageSize, page)
             if (response.isSuccessful) {
-                _articles.postValue(response.body()?.articles ?: emptyList())
+                val articles = response.body()?.articles.orEmpty()
+                _articles.postValue(articles)
                 currentPage = page
             } else {
-                Log.v("API","ERROR");
+                Log.e("loadNews", "Error API: ${response.code()} ${response.message()}")
             }
         }
     }
 
-    fun likeArticle(article: Article) {
-    }
 
-    fun unlikeArticle(article: Article) {
-    }
 
     fun loadNextPage() = loadNews(currentPage + 1)
     fun loadPreviousPage() = if (currentPage > 1) loadNews(currentPage - 1) else null;

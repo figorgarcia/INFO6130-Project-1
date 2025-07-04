@@ -44,17 +44,12 @@ class ArticlesFragment : Fragment() {
         setupRecyclerView()
         observeViewModel()
 
-        // Load button to fetch articles
-        binding.btnLoad.setOnClickListener {
-            viewModel.loadNews(1)
-        }
-
-        // Hide the liked articles button (removed from UI)
-        binding.btnLikedArticles.visibility = View.GONE
+        viewModel.loadNews(1)
     }
 
     private fun setupRecyclerView() {
-        articleAdapter = ArticleAdapter(emptyList(),
+        articleAdapter = ArticleAdapter(
+            emptyList(),
             onLikeClick = { article ->
                 toggleLike(article)
             },
