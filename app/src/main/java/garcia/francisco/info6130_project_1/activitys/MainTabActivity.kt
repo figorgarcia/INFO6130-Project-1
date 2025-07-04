@@ -35,7 +35,7 @@ class MainTabActivity : AppCompatActivity() {
 
                 R.id.nav_topHeadlines -> {
                     supportFragmentManager.beginTransaction()
-//                        .replace(R.id.nav_host_fragment, ArticlesFragment())
+                        .replace(R.id.nav_host_fragment, TopHeadlinesFragment())
                         .commit()
                     true
                 }

@@ -10,4 +10,8 @@ class NewsRepository(private val api: NewsInterface) {
     suspend fun getNews(query: String, pageSize: Int, page: Int): Response<NewsResponse> {
         return api.getNews(query, pageSize, page, apiKey)
     }
+
+    suspend fun getHeadlines(country: String): Response<NewsResponse> {
+        return  api.getHeadlines(country, apiKey)
+    }
 }
