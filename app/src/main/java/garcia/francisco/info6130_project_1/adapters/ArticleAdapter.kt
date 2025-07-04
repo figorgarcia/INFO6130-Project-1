@@ -35,7 +35,7 @@ class ArticleAdapter(
         val article = articles[position]
         holder.titleTextView.text = article.title
         holder.descriptionTextView.text = article.description ?: ""
-        holder.likeTextView.text = if (article.isLiked) "♥" else "♡"
+//        holder.likeTextView.text = if (article.isLiked) "♥" else "♡"
 
         // Update like button appearance
         updateLikeButton(holder.likeButton, article.isLiked)
@@ -45,8 +45,8 @@ class ArticleAdapter(
             onLikeClick(article)
             updateLikeButton(holder.likeButton, article.isLiked)
         }
-        holder.descriptionTextView.text = article.description ?: ""
-        holder.likeTextView.text = if (article.isLiked) "♥" else "♡"
+//        holder.descriptionTextView.text = article.description ?: ""
+//        holder.likeTextView.text = if (article.isLiked) "♥" else "♡"
 
         Glide.with(holder.imageView.context)
             .load(article.urlToImage)

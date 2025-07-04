@@ -6,4 +6,12 @@
     <string name="article_title">Article Title</string>
     <string name="article_description">Article description goes here...</string>
     <string name="like_btn">🤍 Like</string>
+    
+    <string name="app_description">A modern news application that fetches and displays the latest news articles from various sources. The app provides a clean, user-friendly interface for browsing news, reading detailed articles, and saving your favorite articles for later reading. Users can explore different categories of news sources and stay updated with current events.</string>
+    
+    <string name="app_features">• Browse latest news articles from multiple sources\n• Read detailed article content with images\n• Like and save your favorite articles\n• View all your liked articles in one place\n• Explore news sources by category\n• View top headlines from different countries\n• Clean and intuitive user interface\n• Fast and responsive design</string>
+    
+    <string name="group_members">• Aragon, Edwin Santiago\n• Garcia, Francisco Igor\n• Nguyen, Cao Hai Dang\n• Shah, Jenish Sunil</string>
+    
+    <string name="course_info">INFO6130 - Mobile Application Development</string>
 </resources>

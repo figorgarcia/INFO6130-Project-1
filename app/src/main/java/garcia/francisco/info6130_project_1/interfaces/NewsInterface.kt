@@ -1,6 +1,8 @@
 package garcia.francisco.info6130_project_1.interfaces
 
 import garcia.francisco.info6130_project_1.models.NewsResponse
+import garcia.francisco.info6130_project_1.models.SourcesResponse
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -19,4 +21,10 @@ interface NewsInterface {
         @Query("country") country: String,
         @Query("apiKey") apiKey: String
     ): Response<NewsResponse>
+
+    @GET("sources")
+    fun getSources(
+        @Query("category") category: String,
+        @Query("apiKey") apiKey: String
+    ): Call<SourcesResponse>
 }

@@ -42,7 +42,7 @@ class MainTabActivity : AppCompatActivity() {
 
                 R.id.nav_sources -> {
                     supportFragmentManager.beginTransaction()
-//                        .replace(R.id.nav_host_fragment, ArticlesFragment())
+                        .replace(R.id.nav_host_fragment, SourcesFragment())
                         .commit()
                     true
                 }
@@ -56,7 +56,7 @@ class MainTabActivity : AppCompatActivity() {
 
                 R.id.nav_about -> {
                     supportFragmentManager.beginTransaction()
-//                        .replace(R.id.nav_host_fragment, AboutFragment())
+                        .replace(R.id.nav_host_fragment, AboutFragment())
                         .commit()
                     true
                 }
