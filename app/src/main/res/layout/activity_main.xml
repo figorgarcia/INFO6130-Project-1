@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activitys.MainActivity">
+    tools:context=".activitys.ArticlesFragment">
 
     <TextView
         android:id="@+id/textView"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnLoad"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -42,7 +42,7 @@
         android:text="Liked Articles"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLoad" />
 
     <TextView
         android:id="@+id/tvTitleResult"
@@ -55,7 +55,7 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLoad" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewArticles"
@@ -70,5 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitleResult" />
+
+    <!-- BottomNavigationView (Tab Bar) -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
