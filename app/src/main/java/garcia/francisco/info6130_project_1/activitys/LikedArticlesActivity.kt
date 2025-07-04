@@ -1,6 +1,7 @@
 package garcia.francisco.info6130_project_1.activitys
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -33,10 +34,11 @@ class LikedArticlesActivity : AppCompatActivity() {
         val likedIds: Set<String> = likePreferencesHelper.getAllLikedArticles()
         val allArticles: List<Article> = ArticleRepository.articles
         val likedArticles: List<Article> = allArticles.filter { likedIds.contains(it.id) }
-
-        adapter = ArticleAdapter(likedArticles) { article ->
-            // Optionally handle click to open detail
-        }
+        adapter = ArticleAdapter(likedArticles,
+            onLikeClick = { article ->
+            },
+            onArticleClick = { article ->
+            })
         binding.recyclerViewLikedArticles.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewLikedArticles.adapter = adapter
 

@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import garcia.francisco.info6130_project_1.R
 import garcia.francisco.info6130_project_1.adapters.ArticleAdapter
@@ -43,11 +42,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        articleAdapter = ArticleAdapter(emptyList()) { article ->
-            // Open detail screen on click
-            val intent = ArticleDetailActivity.newIntent(this, article)
-            startActivity(intent)
-        }
+        articleAdapter = ArticleAdapter(emptyList(),
+            onLikeClick = { article ->
+                toggleLike(article)
+            },
+            onArticleClick = { article ->
+                // Open detail screen on click
+                val intent = ArticleDetailActivity.newIntent(this, article)
+                startActivity(intent)
+            })
 
         binding.recyclerViewArticles.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -62,17 +65,24 @@ class MainActivity : AppCompatActivity() {
                 articles.forEach { article ->
                     article.isLiked = likePreferencesHelper.getLikeState(article.id)
                 }
+
+                // Update the adapter with the new articles
+                articleAdapter.updateArticles(articles)
+
                 // Save to repository for sharing
                 ArticleRepository.articles = articles
-                articleAdapter.updateArticles(articles)
-                binding.tvTitleResult.text = "${articles.size} articles loaded"
+
+                // Show the RecyclerView and update status
                 binding.recyclerViewArticles.visibility = View.VISIBLE
+                binding.tvTitleResult.text = "${articles.size} articles loaded"
             } else {
+                // Handle empty results
                 binding.tvTitleResult.text = "No results found."
                 binding.recyclerViewArticles.visibility = View.GONE
             }
         }
     }
+
 
     private fun toggleLike(article: Article) {
         article.isLiked = !article.isLiked
